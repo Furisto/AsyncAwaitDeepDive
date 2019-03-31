@@ -1,0 +1,36 @@
+@startuml
+autonumber
+skinparam sequence {
+	LifeLineBorderColor black
+	LifeLineBackgroundColor transparent
+	
+	ParticipantBorderColor black
+	ParticipantBackgroundColor whiteSmoke
+	ParticipantFontColor black
+}
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+
+activate Program
+Program -[#LimeGreen]> MessageLoop: Enqueue
+MessageLoop --[#LimeGreen]> Program
+
+activate MessageLoop
+MessageLoop -> Handler: RunLoop
+activate Handler
+Handler -> StateMachine: AsyncOperation
+activate StateMachine
+StateMachine -> TaskAwaiter: MoveNext
+TaskAwaiter -> Task: Continue with MoveNext
+activate Task
+Task --> TaskAwaiter
+TaskAwaiter --> StateMachine
+StateMachine --> Handler
+deactivate StateMachine
+
+Handler -> Handler:Wait
+"Timer/IO" -[#CornflowerBlue]> Task: Complete
+Task -[#CornflowerBlue]> SynchronizationContext: FinishContinuations
+deactivate Task
+SynchronizationContext -[#CornflowerBlue]> MessageLoop: Enqueue
+@enduml
