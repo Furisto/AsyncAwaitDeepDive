@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scenarios.TaskCompletionSourceHang;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,23 +12,24 @@ namespace TaskCompletionSource2
     {
         static async Task Main(string[] args)
         {
-            TaskCompletionSource<bool> setupFinished = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-
-            Task producerTask = Task.Run(async () =>
+            AsyncQueue<int> asyncQueue = new AsyncQueue<int>();
+            _ = Task.Run(() =>
             {
-                await Task.Delay(500);
-                setupFinished.SetResult(true);
-
-                foreach (int number in Enumerable.Range(1, 8))
+                Thread.Sleep(2000);
+                asyncQueue.Enqueue(5);
+                for (int i = 0; i < 10; i++)
                 {
-                    await Task.Delay(600);
-                    Console.WriteLine(number);
+                    Console.WriteLine($"BackgroundThread: {i}");
+                    Thread.Sleep(800);
                 }
             });
 
-            await setupFinished.Task;
-            Console.WriteLine("Values are now produced");
-            producerTask.Wait();
+            await asyncQueue.Dequeue();
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine($"ForegroundThread: {i}");
+                Thread.Sleep(800);
+            }
 
             Console.WriteLine("Finished!");
             Console.ReadLine();
