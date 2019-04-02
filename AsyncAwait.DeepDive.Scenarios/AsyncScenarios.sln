@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scenarios.AsyncObjectCreati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scenarios.Locking", "Scenarios.Locking\Scenarios.Locking.csproj", "{EB995BCB-BA43-401E-A19C-583CE6B80B07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scenarios.TaskCompletionSourceHang", "Scenarios.TaskCompletionSourceHang\Scenarios.TaskCompletionSourceHang.csproj", "{BF60D3AA-01C4-42F6-BE6B-C77D31B45603}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scenarios.TaskCompletionSource", "Scenarios.TaskCompletionSource\Scenarios.TaskCompletionSource.csproj", "{BF60D3AA-01C4-42F6-BE6B-C77D31B45603}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
